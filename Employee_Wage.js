@@ -5,12 +5,14 @@ class Employee {
     static WAGE_PER_HOUR = 20;
     static FULL_DAY_HOUR = 8;
     static PART_TIME_HOUR = 4;
+    static WORKING_DAYS_PER_MONTH = 20;
 
     constructor(name, type = 'full-time') {
         this.name = name;
         this.type = type;
         this.attendance = Employee.checkAttendance();
         this.dailyWage = this.calculateDailyWage();
+        this.monthlyWage = this.calculateMonthlyWage();
     }
 
     static checkAttendance() {
@@ -24,6 +26,15 @@ class Employee {
             return Employee.WAGE_PER_HOUR * hoursWorked;
         }
         return 0;
+    }
+
+    calculateMonthlyWage() {
+        let totalWage = 0;
+        for (let day = 0; day < Employee.WORKING_DAYS_PER_MONTH; day++) {
+            this.attendance = Employee.checkAttendance(); 
+            totalWage += this.calculateDailyWage();
+        }
+        return totalWage;
     }
 }
 
@@ -48,7 +59,8 @@ function displayEmployeeInfo(option) {
         employeeData = employees.map(employee => ({
             Name: employee.name,
             Type: employee.type,
-            DailyWage: employee.dailyWage
+            DailyWage: employee.dailyWage,
+            MonthlyWage: employee.monthlyWage
         }));
         console.table(employeeData);
     } else {
