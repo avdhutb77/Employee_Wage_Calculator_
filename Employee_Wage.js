@@ -2,52 +2,55 @@ import readlineSync from 'readline-sync';
 console.log("Welcome to Employee Wage Computation Program");
 
 class Employee {
-    
-    static WAGE_PER_HOUR = 20; 
-    static FULL_DAY_HOUR = 8;   
-    constructor(name) {
+    static WAGE_PER_HOUR = 20;
+    static FULL_DAY_HOUR = 8;
+    static PART_TIME_HOUR = 4;
+
+    constructor(name, type = 'full-time') {
         this.name = name;
+        this.type = type;
         this.attendance = Employee.checkAttendance();
-        this.dailyWage = this.calculateDailyWage(); 
+        this.dailyWage = this.calculateDailyWage();
     }
 
     static checkAttendance() {
-        const isPresent = Math.floor(Math.random() * 2); 
+        const isPresent = Math.floor(Math.random() * 2);
         return isPresent === 1 ? "Present" : "Absent";
     }
 
-  
     calculateDailyWage() {
+        let hoursWorked = this.type === 'part-time' ? Employee.PART_TIME_HOUR : Employee.FULL_DAY_HOUR;
         if (this.attendance === "Present") {
-            return Employee.WAGE_PER_HOUR * Employee.FULL_DAY_HOUR; 
+            return Employee.WAGE_PER_HOUR * hoursWorked;
         }
-        return 0; 
+        return 0;
     }
 }
 
 const employees = [
-    new Employee("Avdhut"),
-    new Employee("Sham"),
-    new Employee("Raju"),
-    new Employee("Virat")
+    new Employee("Avdhut", "full-time"),
+    new Employee("Sham", "full-time"),
+    new Employee("Raju", "part-time"),
+    new Employee("Virat", "full-time"),
+    new Employee("Rahul", "part-time")
 ];
 
 function displayEmployeeInfo(option) {
     let employeeData;
     if (option === 1) {
-       
         employeeData = employees.map(employee => ({
             Name: employee.name,
+            Type: employee.type,
             Attendance: employee.attendance
         }));
-        console.table(employeeData); 
+        console.table(employeeData);
     } else if (option === 2) {
-      
         employeeData = employees.map(employee => ({
             Name: employee.name,
+            Type: employee.type,
             DailyWage: employee.dailyWage
         }));
-        console.table(employeeData); 
+        console.table(employeeData);
     } else {
         console.log("Invalid option. Please select 1, 2, or 3.");
     }
