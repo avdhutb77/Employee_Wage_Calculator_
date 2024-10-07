@@ -1,0 +1,15 @@
+{
+  "name": "employee_wage",
+  "version": "1.0.0",
+  "main": "Employee_Wage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type":"module",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
